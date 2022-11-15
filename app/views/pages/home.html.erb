@@ -1,2 +1,31 @@
-<h1>Pages#home</h1>
-<p>Find me in app/views/pages/home.html.erb</p>
+<div class="container w-25 mt-5">
+  <h3 class="fw-bolder mb-3">My favorite colors</h3>
+  <%= simple_form_for @new_color do |f| %>
+    <div class="row">
+    <div class="col-10">
+      <%= f.input :name, placeholder: "Color name", style: "width: 100%", class: "w-100" %>
+    </div>
+    <div class="col-2">
+      <%= f.color_field :hex, style: "height: 2.35rem; width: 2.35rem;", class: "border-0" %>
+    </div>
+    </div>
+    <%= f.submit class: "btn btn-primary w-100 mb-3" %>
+  <% end %>
+  <p class="fw-bolder">Color collection</p>
+  <% if @all_colors.length != 0 %>
+    <% @all_colors.each do |c| %>
+      <div class="d-flex justify-content-between align-items-center mb-2">
+        <div>
+          <i class="fa-solid fa-lg fa-square" style="color: <%= c.hex %>;"></i>
+          <%= c.name %>
+        </div>
+        <div>
+          <%= button_to "Remove color", destroy_color_path(c), method: :delete, class: "btn btn-sm btn-outline-secondary" %>
+        </div>
+      </div>
+    <% end %>
+  <% else %>
+    <p class="fw-bolder ">Your color collection is empty <span class="fa-solid fa-heart-crack text-center text-danger fa-lg"></span></p>
+    <p class="text-muted "><small>Please add your favourite color to make us happy</small></p>
+  <% end %>
+</div>
